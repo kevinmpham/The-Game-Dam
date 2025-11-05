@@ -1,0 +1,41 @@
+<h2>Suppliers</h2>
+
+{{! READ table }}
+<table>
+    <thead>
+        {{! printing the DB attributes for header }}
+        <tr>
+            {{#each suppliers.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{! For each row, print the supplierid, suppliername, phone, email, address, state, zip, country, city in that order }}
+        {{#each suppliers}}
+        <tr>
+            <td>{{this.supplierID}}</td>
+            <td>{{this.supplierName}}</td>
+            <td>{{this.phone}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.address}}</td>
+            <td>{{this.state}}</td>
+            <td>{{this.zip}}</td>
+            <td>{{this.country}}</td>
+            <td>{{this.city}}</td>
+
+            {{! DELETE form }}
+            <form id='delete_person_form'>
+                <input type='hidden' name='delete_person_id' value='{{this.ID}}' />
+                <td>
+                    <button type="button" class="delete-btn">X</button>
+                </td>
+            </form>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

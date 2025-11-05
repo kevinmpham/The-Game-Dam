@@ -1,0 +1,37 @@
+<h2>Employees</h2>
+
+{{! READ table }}
+<table>
+    <thead>
+        {{! printing the DB attributes for the header }}
+        <tr>
+            {{#each employees.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{! For each row, print the employeeID, fName, lName, email, phone }}
+        {{#each employees}}
+        <tr>
+            <td>{{this.employeeID}}</td>
+            <td>{{this.fName}}</td>
+            <td>{{this.lName}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.phone}}</td>
+
+            {{! DELETE form }}
+            <form id='delete_person_form'>
+                <input type='hidden' name='delete_person_id' value='{{this.ID}}' />
+                <td>
+                    <button type="button" class="delete-btn">X</button>
+                </td>
+            </form>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

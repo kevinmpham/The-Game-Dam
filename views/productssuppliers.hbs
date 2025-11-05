@@ -1,0 +1,35 @@
+<h2>Products Suppliers</h2>
+
+{{! READ table }}
+<table>
+    <thead>
+        {{! printing DB attributes for the header }}
+        <tr>
+            {{#each Products_Suppliers.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{! For each row, print the proSupID, productID, supplierID }}
+        {{#each Products_Suppliers}}
+        <tr>
+            <td>{{this.proSupID}}</td>
+            <td>{{this.productID}}</td>
+            <td>{{this.supplierID}}</td>
+            
+            {{! DELETE form }}
+            <form id='delete_person_form'>
+                <input type='hidden' name='delete_person_id' value='{{this.ID}}' />
+                <td>
+                    <button type="button" class="delete-btn">X</button>
+                </td>
+            </form>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

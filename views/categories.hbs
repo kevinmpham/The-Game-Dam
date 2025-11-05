@@ -1,0 +1,34 @@
+<h2>Categories</h2>
+
+{{! READ table }}
+<table>
+    <thead>
+        {{! printing the DB attributes for the header }}
+        <tr>
+            {{#each categories.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{! For each row, print the categoryID and categoryName }}
+        {{#each categories}}
+        <tr>
+            <td>{{this.categoryID}}</td>
+            <td>{{this.categoryName}}</td>
+
+            {{! DELETE form }}
+            <form id='delete_person_form'>
+                <input type='hidden' name='delete_person_id' value='{{this.ID}}' />
+                <td>
+                    <button type="button" class="delete-btn">X</button>
+                </td>
+            </form>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
