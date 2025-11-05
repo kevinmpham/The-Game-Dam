@@ -1,0 +1,38 @@
+<h2>Product Restock Details</h2>
+
+{{! READ table }}
+<table>
+    <thead>
+        {{! For the table header row, we print the DB attribute names }}
+        <tr>
+            {{#each details.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{! For each row, print the id, fname, lname, homeworld and age }}
+        {{#each details}}
+        <tr>
+            <td>{{this.detailsID}}</td>
+            <td>{{this.orderID}}</td>
+            <td>{{this.Product}}</td>
+            <td>{{this.quantityOrdered}}</td>
+            <td>${{this.singlePrice}}</td>
+            <td>${{this.totalPrice}}</td>
+
+            {{! DELETE form }}
+            <form id='delete_person_form'>
+                <input type='hidden' name='delete_person_id' value='{{this.ID}}' />
+                <td>
+                    <button type="button" class="delete-btn">X</button>
+                </td>
+            </form>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

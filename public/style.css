@@ -1,3 +1,8 @@
+body {
+  background-color: #cccece;
+  color: #222;
+}
+
 h1, h2 { margin-left: 16px;}
 table {border-collapse: collapse;margin-left: 32px;}
 th, td {
@@ -7,8 +12,79 @@ th, td {
 }
 th {background-color: #f2f2f2;}
 tr:nth-child(even) {background-color: #f9f9f9;}
-.cuForm { margin-left: 32px;}
 input, select { margin-bottom: 4px;margin-right: 12px;}
-nav {background-color: #cecece;padding: 16px;}
 a {margin-left: 16px;}
 .homepageDescription {margin-left: 32px;}
+
+.navbar {
+  background-color: #fabb33;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 10px;
+}
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 4px;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 4px 4px;
+  border-radius: 4px;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.delete-btn:hover {
+  background-color: #91271c;
+}
+
+.create-btn {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.create-btn:hover {
+  background-color: #219150;
+}
+
+.update-btn {
+  background-color: #edfa7b;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.update-btn:hover {
+  background-color: #929422;
+}

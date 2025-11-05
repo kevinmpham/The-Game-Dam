@@ -1,11 +1,31 @@
 <h1>Products</h1>
 
+{{! CREATE form }}
+<h2>
+    <button type="button" id="showCreateForm" class="create-btn">Create Product</button>
+    <form id="createForm" style="display:none;">
+        <input type="text" name="create_product_name" placeholder="Product Name" required>
+        <input type="text" name="create_product_price" placeholder="Product Price" required>
+        <input type="number" name="create_product_stock" placeholder="Product Stock" required>
+        <select name="create_category" required>
+            <option value="" disabled selected>Select Category</option>
+            {{#each categories}}
+            <option value="{{this.categoryID}}">{{this.categoryName}}</option>
+            {{/each}}
+        </select>
+
+        <button type="submit">Submit</button>
+    </form>
+</h2>
+
+
+
 {{! READ table }}
 <table>
     <thead>
         {{! For the table header row, we print the DB attribute names }}
         <tr>
-            {{#each people.[0]}}
+            {{#each products.[0]}}
             <th>
                 {{@key}}
             </th>
@@ -16,22 +36,19 @@
 
     <tbody>
         {{! For each row, print the id, fname, lname, homeworld and age }}
-        {{#each people}}
+        {{#each products}}
         <tr>
-            <td>{{this.id}}</td>
-            <td>{{this.fname}}</td>
-            <td>{{this.lname}}</td>
-            <td>{{this.homeworld}}</td>
-            <td>{{this.age}}</td>
+            <td>{{this.ID}}</td>
+            <td>{{this.Name}}</td>
+            <td>${{this.Price}}</td>
+            <td>{{this.Stock}}</td>
+            <td>{{this.Category}}</td>
 
             {{! DELETE form }}
             <form id='delete_person_form'>
-                <input type='hidden' name='delete_person_id' value='{{this.id}}' />
-                <input type='hidden' name='delete_person_name' value='{{this.fname}} {{this.lname}}' />
+                <input type='hidden' name='delete_person_id' value='{{this.ID}}' />
                 <td>
-                    <button type='submit'>
-                        Delete
-                    </button>
+                    <button type="button" class="delete-btn">X</button>
                 </td>
             </form>
         </tr>
@@ -39,59 +56,57 @@
     </tbody>
 </table>
 
-{{! CREATE form }}
-<h2>Create a Person</h2>
-<form class='cuForm' id='create_person_form'>
-    <label for='create_person_fname'>First Name: </label>
-    <input type='text' name='create_person_fname' id='create_person_fname' required />
-
-    <label for='create_person_lname'>Last Name: </label>
-    <input type='text' name='create_person_lname' id='create_person_lname' />
-
-    <label for='create_person_homeworld'>Homeworld: </label>
-    <select name='create_person_homeworld' id='create_person_homeworld'>
-        <option value='NULL' selected>Select a Planet</option>
-        <option value='NULL'>&lt; None &gt;</option>
-        {{#each homeworlds}}
-        <option value='{{this.id}}' required>{{this.name}}</option>
-        {{/each}}
-    </select>
-
-    <label for='create_person_age'>Age:</label>
-    <input type='number' name='create_person_age' id='create_person_age' min='0' />
-
-    <input type='submit' />
-</form>
-
 {{! UPDATE form }}
-<h2>Update a Person</h2>
-<form class='cuForm' id='update_person_form'>
-    <label for='update_person_id'>Person to Update: </label>
-    <select name='update_person_id' id='update_person_id' required>
-        <option value='' disabled selected>Select a Person</option>
-        {{#each people}}
-        <option value='{{this.id}}' required>
-            {{this.id}}
-            -
-            {{this.fname}}
-            {{this.lname}}
-        </option>
-        {{/each}}
-    </select>
+<h2>
+    <button type="button" id="showUpdateForm" class="update-btn">Update a Product</button>
+    <form id='updateForm' style="display:none;">
+        <select name='update_product_id' id='update_product_id' required>
+            <option value='' disabled selected>Select a Product</option>
+            {{#each products}}
+            <option value='{{this.ID}}' required>
+                {{this.ID}} - {{this.Name}}
+            </option>
+            {{/each}}
+        </select>
 
-    <label for='update_person_homeworld'>Homeworld: </label>
-    <select name='update_person_homeworld' id='update_person_homeworld'>
-        <option value='NULL' disabled selected>Select a Planet</option>
-        <option value='NULL'>&lt; None &gt;</option>
-        {{#each homeworlds}}
-        <option value='{{this.id}}' required>
-            {{this.name}}
-        </option>
-        {{/each}}
-    </select>
+        <input type="text" name="update_product_price" placeholder="Product Price" required>
+        <input type="number" name="update_product_stock" placeholder="Product Stock" required>
 
-    <label for='update_person_age'>Age: </label>
-    <input type='number' name='update_person_age' id='update_person_age' min='0' />
 
-    <input type='submit' />
+        <input type='submit' />
+    </form>
+</h2>
+
+<script>
+    var isCreateShown = false;
+    var isUpdateShown = false;
+    document.getElementById('showCreateForm').onclick = function() {
+        if (!isCreateShown) {
+            document.getElementById('createForm').style.display = 'block';
+            isCreateShown = true;
+        } else {
+            document.getElementById('createForm').style.display = 'none';
+            isCreateShown = false;
+        }
+    };
+    // Hide the form after submission
+    document.getElementById('createForm').onsubmit = function() {
+        this.style.display = 'none';
+    };
+
+    document.getElementById('showUpdateForm').onclick = function() {
+        if (!isUpdateShown) {
+            document.getElementById('updateForm').style.display = 'block';
+            isUpdateShown = true;
+        } else {
+            document.getElementById('updateForm').style.display = 'none';
+            isUpdateShown = false;
+        }
+    };
+    // Hide the form after submission
+    document.getElementById('updateForm').onsubmit = function() {
+        this.style.display = 'none';
+    };
+</script>
+
 </form>
