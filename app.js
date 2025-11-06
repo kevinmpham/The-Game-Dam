@@ -139,7 +139,7 @@ app.get('/categories', async function (req, res) {
 app.get('/productssuppliers', async function (req, res) {
     try {
         query1 = 'SELECT Products_Suppliers.proSupID, Products.productID, Suppliers.supplierID, \
-            Products.productName, Suppliers.supplierName \
+            Products.productName \
             FROM Products_Suppliers \
             LEFT JOIN Products ON Products_Suppliers.productID = Products.productID \
             LEFT JOIN Suppliers ON Products_Suppliers.supplierID = Suppliers.supplierID;';
