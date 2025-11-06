@@ -49,18 +49,18 @@ LEFT JOIN Products ON ProductRestockDetails.productID = Products.productID
 
 
 -- get all employees and their information
-SELECT employeeID AS "ID", fName AS "First Name", lName AS "Last Name", 
+SELECT employeeID AS "ID", fName AS "FirstName", lName AS "LastName", 
 email AS "Email", phone AS "Phone" FROM Employees
 
 -- get all suppliers and their information
-SELECT supplierID as "ID", supplierName as "Supplier Name", phone as "Phone", email as "Email", 
-    address as "Address", state as "State", zip as "Zip code", country as "Country", city as "City"  FROM Suppliers
+SELECT supplierID as "ID", supplierName as "SupplierName", phone as "Phone", email as "Email", 
+    address as "Address", state as "State", zip as "ZipCode", country as "Country", city as "City"  FROM Suppliers
 
 -- Get category information
-SELECT categoryID AS "ID", categoryName as "Category Name" FROM Categories
+SELECT categoryID AS "ID", categoryName as "CategoryName" FROM Categories
 
 -- Get product supplier information
-SELECT proSupID as "ID", Products.productID as "Product ID", Suppliers.supplierID as "Supplier ID", 
-     Products.productName as "Product Name", Suppliers.supplierName as "Supplier Name" FROM Products_Suppliers
+SELECT proSupID as "ID", Products.productID as "ProductID", Suppliers.supplierID as "SupplierID", 
+     Products.productName as "ProductName", Suppliers.supplierName as "SupplierName" FROM Products_Suppliers
 LEFT JOIN Products ON Products_Suppliers.productID = Products.productID
 LEFT JOIN Suppliers ON Products_Suppliers.supplierID = Suppliers.supplierID;

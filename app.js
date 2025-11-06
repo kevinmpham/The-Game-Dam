@@ -91,7 +91,7 @@ app.get('/productrestockdetails', async function (req, res) {
 
 app.get('/employees', async function (req, res) {
     try {
-        query1 = 'SELECT employeeID AS "ID", fName AS "First Name", lName AS "Last Name", email AS "Email", phone AS "Phone" FROM Employees;';
+        query1 = 'SELECT employeeID AS "ID", fName AS "FirstName", lName AS "LastName", email AS "Email", phone AS "Phone" FROM Employees;';
         const [employees] = await db.query(query1);
         res.render('employees', { employees: employees });
     }
@@ -106,8 +106,8 @@ app.get('/employees', async function (req, res) {
 
 app.get('/suppliers', async function (req, res) {
     try {
-        query1 = 'SELECT supplierID as "ID", supplierName as "Supplier Name", phone as "Phone", \
-            email as "Email", address as "Address", state as "State", zip as "Zip code", country as "Country", city as "City" \
+        query1 = 'SELECT supplierID as "ID", supplierName as "SupplierName", phone as "Phone", \
+            email as "Email", address as "Address", state as "State", zip as "ZipCode", country as "Country", city as "City" \
             FROM Suppliers;';
         const [suppliers] = await db.query(query1);
         res.render('suppliers', { suppliers: suppliers });
@@ -123,7 +123,7 @@ app.get('/suppliers', async function (req, res) {
 
 app.get('/categories', async function (req, res) {
     try {
-        query1 = 'SELECT categoryID AS "ID", categoryName as "Category Name" FROM Categories;';
+        query1 = 'SELECT categoryID AS "ID", categoryName as "CategoryName" FROM Categories;';
         const [categories] = await db.query(query1);
         res.render('categories', { categories: categories });
     }
@@ -138,8 +138,8 @@ app.get('/categories', async function (req, res) {
 
 app.get('/productssuppliers', async function (req, res) {
     try {
-        query1 = 'SELECT proSupID as "ID", Products.productID as "Product ID", Suppliers.supplierID as "Supplier ID", \
-            Products.productName as "Product Name", Suppliers.supplierName as "Supplier Name" \
+        query1 = 'SELECT proSupID as "ID", Products.productID as "ProductID", Suppliers.supplierID as "SupplierID", \
+            Products.productName as "ProductName", Suppliers.supplierName as "SupplierName" \
             FROM Products_Suppliers \
             LEFT JOIN Products ON Products_Suppliers.productID = Products.productID \
             LEFT JOIN Suppliers ON Products_Suppliers.supplierID = Suppliers.supplierID;';
