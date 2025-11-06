@@ -89,6 +89,71 @@ app.get('/productrestockdetails', async function (req, res) {
     }
 });
 
+app.get('/employees', async function (req, res) {
+    try {
+        query1 = 'SELECT employeeID AS "ID", fName AS "First Name", lName AS "Last Name", email AS "Email", phone AS "Phone" FROM Employees;';
+        const [employees] = await db.query(query1);
+        res.render('employees', { employees: employees });
+    }
+    catch (error) {
+        console.error('Error executing query:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database query.'
+        );
+    }
+});
+
+app.get('/suppliers', async function (req, res) {
+    try {
+        query1 = 'SELECT supplierID as "ID", supplierName as "Supplier Name", phone as "Phone", \
+            email as "Email", address as "Address", state as "State", zip as "Zip code", country as "Country", city as "City" \
+            FROM Suppliers;';
+        const [suppliers] = await db.query(query1);
+        res.render('suppliers', { suppliers: suppliers });
+    }
+    catch (error) {
+        console.error('Error executing query:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database query.'
+        );
+    }
+});
+
+app.get('/categories', async function (req, res) {
+    try {
+        query1 = 'SELECT categoryID AS "ID", categoryName as "Category Name" FROM Categories;';
+        const [categories] = await db.query(query1);
+        res.render('categories', { categories: categories });
+    }
+    catch (error) {
+        console.error('Error executing query:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database query.'
+        );
+    }
+});
+
+app.get('/productssuppliers', async function (req, res) {
+    try {
+        query1 = 'SELECT proSupID as "ID", Products.productID as "Product ID", Suppliers.supplierID as "Supplier ID", \
+            Products.productName as "Product Name", Suppliers.supplierName as "Supplier Name" \
+            FROM ProductsSuppliers \
+            LEFT JOIN Products ON ProductsSuppliers.productID = Products.productID \
+            LEFT JOIN Suppliers ON ProductsSuppliers.supplierID = Suppliers.supplierID;';
+        const [productSuppliers] = await db.query(query1);
+        res.render('productsSuppliers', { productSuppliers: productSuppliers });
+    }
+    catch (error) {
+        console.error('Error executing query:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database query.'
+        );
+    }
+});
 
 // ########################################
 // ########## LISTENER
