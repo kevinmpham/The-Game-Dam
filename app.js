@@ -138,13 +138,12 @@ app.get('/categories', async function (req, res) {
 
 app.get('/productssuppliers', async function (req, res) {
     try {
-        query1 = 'SELECT Products_Suppliers.proSupID, Products.productID, Suppliers.supplierID, \
-            Products.productName \
+        query1 = 'SELECT Products_Suppliers.proSupID, Products.productID, Suppliers.supplierID \
             FROM Products_Suppliers \
             LEFT JOIN Products ON Products_Suppliers.productID = Products.productID \
             LEFT JOIN Suppliers ON Products_Suppliers.supplierID = Suppliers.supplierID;';
         const [productSuppliers] = await db.query(query1);
-        res.render('productssuppliers', { productssuppliers: productSuppliers });
+        res.render('productsSuppliers', { productSuppliers: productSuppliers });
     }
     catch (error) {
         console.error('Error executing query:', error);
