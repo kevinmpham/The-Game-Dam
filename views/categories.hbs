@@ -5,7 +5,7 @@
     <thead>
         {{! printing the DB attributes for the header }}
         <tr>
-            {{#each Categories.[0]}}
+            {{#each categories.[0]}}
             <th>
                 {{@key}}
             </th>
@@ -16,7 +16,7 @@
 
     <tbody>
         {{! For each row, print the categoryID and categoryName }}
-        {{#each Categories}}
+        {{#each categories}}
         <tr>
             <td>{{this.categoryID}}</td>
             <td>{{this.categoryName}}</td>
