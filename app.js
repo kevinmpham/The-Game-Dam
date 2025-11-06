@@ -140,11 +140,11 @@ app.get('/productssuppliers', async function (req, res) {
     try {
         query1 = 'SELECT proSupID as "ID", Products.productID as "Product ID", Suppliers.supplierID as "Supplier ID", \
             Products.productName as "Product Name", Suppliers.supplierName as "Supplier Name" \
-            FROM ProductsSuppliers \
-            LEFT JOIN Products ON ProductsSuppliers.productID = Products.productID \
-            LEFT JOIN Suppliers ON ProductsSuppliers.supplierID = Suppliers.supplierID;';
+            FROM Products_Suppliers \
+            LEFT JOIN Products ON Products_Suppliers.productID = Products.productID \
+            LEFT JOIN Suppliers ON Products_Suppliers.supplierID = Suppliers.supplierID;';
         const [productSuppliers] = await db.query(query1);
-        res.render('productsSuppliers', { productSuppliers: productSuppliers });
+        res.render('productsuppliers', { productsuppliers: productSuppliers });
     }
     catch (error) {
         console.error('Error executing query:', error);
