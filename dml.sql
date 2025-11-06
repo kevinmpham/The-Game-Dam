@@ -33,7 +33,7 @@ WHERE productID = :product_id_input
 DELETE FROM Products WHERE productID = :product_id_input
 
 -- Associate a product with a supplier
-INSERT INTO Product_Suppliers (productID, supplierID)
+INSERT INTO Products_Suppliers (productID, supplierID)
 VALUES (:product_id_input, :supplier_id_input)
 
 -- Get all Restock Orders with their supplier names and employee names
