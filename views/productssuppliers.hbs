@@ -5,7 +5,7 @@
     <thead>
         {{! printing DB attributes for the header }}
         <tr>
-            {{#each Products_Suppliers.[0]}}
+            {{#each productSuppliers.[0]}}
             <th>
                 {{@key}}
             </th>
@@ -16,7 +16,7 @@
 
     <tbody>
         {{! For each row, print the proSupID, productID, supplierID }}
-        {{#each Products_Suppliers}}
+        {{#each productSuppliers}}
         <tr>
             <td>{{this.proSupID}}</td>
             <td>{{this.productID}}</td>
