@@ -5,12 +5,17 @@
     <thead>
         {{! printing the DB attributes for header }}
         <tr>
-            {{#each suppliers.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
-            <th></th>
+            <th>ID</th>
+            <th>Supplier Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip</th>
+            <th>Country</th>
+            <th>   </th>
+
         </tr>
     </thead>
 
@@ -23,10 +28,11 @@
             <td>{{this.phone}}</td>
             <td>{{this.email}}</td>
             <td>{{this.address}}</td>
+            <td>{{this.city}}</td>
             <td>{{this.state}}</td>
             <td>{{this.zip}}</td>
             <td>{{this.country}}</td>
-            <td>{{this.city}}</td>
+ 
 
             {{! DELETE form }}
             <form id='delete_person_form'>

@@ -5,11 +5,12 @@
     <thead>
         {{! For the table header row, we print the DB attribute names }}
         <tr>
-            {{#each restockOrders.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
+            <th>Order ID</th>
+            <th>Order Date</th>
+            <th>Total Cost</th>
+            <th>Delivered</th>
+            <th>Supplier</th>
+            <th>Employee</th>
             <th></th>
         </tr>
     </thead>

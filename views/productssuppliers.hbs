@@ -5,11 +5,10 @@
     <thead>
         {{! printing DB attributes for the header }}
         <tr>
-            {{#each productSuppliers.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
+            <th>ID</th>
+            <th>Product Name</th>
+            <th>Supplier Name</th>
+
             <th></th>
         </tr>
     </thead>
@@ -19,8 +18,8 @@
         {{#each productSuppliers}}
         <tr>
             <td>{{this.proSupID}}</td>
-            <td>{{this.productID}}</td>
-            <td>{{this.supplierID}}</td>
+            <td>{{this.productName}}</td>
+            <td>{{this.supplierName}}</td>
             
             {{! DELETE form }}
             <form id='delete_person_form'>
@@ -33,3 +32,45 @@
         {{/each}}
     </tbody>
 </table>
+
+<h2>
+    <button type="button" id="showUpdateForm" class="update-btn">Update a Product-Supplier Relationship</button>
+    <form id='updateForm' style="display:none;">
+        <select name='update_product_id' id='update_product_id' required>
+            <option value='' disabled selected>Select a Product</option>
+            {{#each products}}
+            <option value='{{this.productID}}' required>
+                {{this.productID}} - {{this.productName}}
+            </option>
+            {{/each}}
+        </select>
+        <select name='update_product_id' id='update_product_id' required>
+            <option value='' disabled selected>Select a Supplier</option>
+            {{#each suppliers}}
+            <option value='{{this.supplierID}}' required>
+                {{this.supplierID}} - {{this.supplierName}} 
+            </option>
+            {{/each}}
+        </select>
+
+        <input type='submit' />
+    </form>
+</h2>
+
+<script>
+    var isUpdateShown = false;
+    document.getElementById('showUpdateForm').onclick = function() {
+        if (!isUpdateShown) {
+            document.getElementById('updateForm').style.display = 'block';
+            isUpdateShown = true;
+        } else {
+            document.getElementById('updateForm').style.display = 'none';
+            isUpdateShown = false;
+        }
+    };
+    // Hide the form after submission
+    document.getElementById('updateForm').onsubmit = function() {
+        this.style.display = 'none';
+    };
+</script>
+
