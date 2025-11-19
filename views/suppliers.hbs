@@ -14,7 +14,6 @@
             <th>State</th>
             <th>Zip</th>
             <th>Country</th>
-            <th>   </th>
 
         </tr>
     </thead>
@@ -32,15 +31,6 @@
             <td>{{this.state}}</td>
             <td>{{this.zip}}</td>
             <td>{{this.country}}</td>
- 
-
-            {{! DELETE form }}
-            <form id='delete_person_form'>
-                <input type='hidden' name='delete_person_id' value='{{this.ID}}' />
-                <td>
-                    <button type="button" class="delete-btn">X</button>
-                </td>
-            </form>
         </tr>
         {{/each}}
     </tbody>

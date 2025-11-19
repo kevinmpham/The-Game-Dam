@@ -56,7 +56,7 @@ app.get('/products', async function (req, res) {
 
 app.get('/restockorders', async function (req, res) {
     try {
-        query1 = 'SELECT orderID, orderDate, totalCost, isDelivered, \
+        query1 = 'SELECT orderID, DATE_FORMAT(orderDate, "%m-%d-%Y") AS orderDate, totalCost, CASE WHEN isDelivered = 1 THEN "Yes" ELSE "No" END AS isDelivered, \
             Suppliers.supplierName as "Supplier", CONCAT(Employees.fName, " ", Employees.lName) as "Employee" FROM RestockOrders \
             LEFT JOIN Suppliers ON RestockOrders.supplierID = Suppliers.supplierID \
             LEFT JOIN Employees ON RestockOrders.employeeID = Employees.employeeID;';
@@ -154,6 +154,59 @@ app.get('/productssuppliers', async function (req, res) {
         // Send a generic error message to the browser
         res.status(500).send(
             'An error occurred while executing the database query.'
+        );
+    }
+});
+
+app.post('/products/create', async function (req, res) {
+    try {
+        // Parse frontend form information
+        let data = req.body;
+
+        if (isNaN(parseInt(data.create_product_stock)))
+            data.create_product_stock = null;
+
+        // Create and execute our queries
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = `CALL sp_CreateProduct(?, ?, ?, ?, @new_id);`;
+
+        // Store ID of last inserted row
+        const [[[rows]]] = await db.query(query1, [
+            data.create_product_name,
+            data.create_product_price,
+            data.create_product_stock,
+            data.create_category,
+        ]);
+
+        console.log(`CREATE product. ID: ${rows.new_id} ` +
+            `Name: ${data.create_product_name}`
+        );
+
+        // Redirect the user to the updated webpage
+        res.redirect('/products');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+app.post('/reset', async function (req, res) {
+    try {
+        const query1 = `CALL sp_ResetDatabase;`;
+
+        await db.query(query1);
+
+        console.log('Database reset to initial state.');
+
+        res.redirect(req.get('referer') || '/');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
         );
     }
 });

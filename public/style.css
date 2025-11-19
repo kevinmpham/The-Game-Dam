@@ -55,10 +55,20 @@ a {margin-left: 16px;}
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
-  transition: background 0.2s;
 }
 .delete-btn:hover {
   background-color: #91271c;
+}
+
+.reset-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
 }
 
 .create-btn {

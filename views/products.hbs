@@ -3,11 +3,11 @@
 {{! CREATE form }}
 <h2>
     <button type="button" id="showCreateForm" class="create-btn">Create Product</button>
-    <form id="createForm" style="display:none;">
-        <input type="text" name="create_product_name" placeholder="Product Name" required>
-        <input type="text" name="create_product_price" placeholder="Product Price" required>
-        <input type="number" name="create_product_stock" placeholder="Product Stock" required>
-        <select name="create_category" required>
+    <form id="createForm" style="display:none;" method="POST" action="/products/create">
+        <input type="text" name="create_product_name" id="create_product_name" placeholder="Product Name" required>
+        <input type="text" name="create_product_price" id="create_product_price" placeholder="Product Price" required>
+        <input type="number" name="create_product_stock" id="create_product_stock" placeholder="Product Stock" required>
+        <select name="create_category" id="create_category" required>
             <option value="" disabled selected>Select Category</option>
             {{#each categories}}
             <option value="{{this.categoryID}}">{{this.categoryName}}</option>

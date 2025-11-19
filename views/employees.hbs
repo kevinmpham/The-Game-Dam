@@ -11,7 +11,7 @@
             <th>Last Name</th>
             <th>Email</th>
             <th>Phone</th>
-            <th></th>
+
         </tr>
     </thead>
 
@@ -25,13 +25,6 @@
             <td>{{this.email}}</td>
             <td>{{this.phone}}</td>
 
-            {{! DELETE form }}
-            <form id='delete_person_form'>
-                <input type='hidden' name='delete_person_id' value='{{this.ID}}' />
-                <td>
-                    <button type="button" class="delete-btn">X</button>
-                </td>
-            </form>
         </tr>
         {{/each}}
     </tbody>
