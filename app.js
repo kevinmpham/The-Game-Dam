@@ -193,6 +193,156 @@ app.post('/products/create', async function (req, res) {
     }
 });
 
+app.post('/productssuppliers/create', async function (req, res) {
+    try {
+        // Parse frontend form information
+        let data = req.body;
+
+        if (isNaN(parseInt(data.create_product_id)))
+            data.create_product_id = null;
+        if (isNaN(parseInt(data.create_supplier_id)))
+            data.create_supplier_id = null;
+
+        // Create and execute our queries
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = `CALL sp_CreateProductsSuppliers(?, ?, @new_id);`;
+
+        // Store ID of last inserted row
+        const [[[rows]]] = await db.query(query1, [
+            data.create_product_id,
+            data.create_supplier_id
+        ]);
+
+        console.log(`CREATE Product_Supplier. ID: ${rows.new_id}`);
+
+        // Redirect the user to the updated webpage
+        res.redirect('/productssuppliers');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+// UPDATE ROUTES
+app.post('/products/update', async function (req, res) {
+    try {
+        // Parse frontend form information
+        const data = req.body;
+
+        // Cleanse data 
+        if (isNaN(parseInt(data.update_product_price)))
+            data.update_product_price = null;
+        if (isNaN(parseInt(data.update_product_stock)))
+            data.update_product_stock = null;
+
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = 'CALL sp_UpdateProduct(?, ?, ?);';
+        await db.query(query1, [
+            data.update_product_id,
+            data.update_product_price,
+            data.update_product_stock,
+        ]);
+
+        console.log(`UPDATE Prodcuts. ID: ${data.update_product_id}`);
+
+        // Redirect the user to the updated webpage data
+        res.redirect('/products');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+app.post('/productssuppliers/update', async function (req, res) {
+    try {
+        // Parse frontend form information
+        const data = req.body;
+
+        // Cleanse data 
+        if (isNaN(parseInt(data.update_product_id)))
+            data.update_product_price = null;
+        if (isNaN(parseInt(data.update_supplier_id)))
+            data.update_product_stock = null;
+
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = 'CALL sp_UpdateProductsSuppliers(?, ?, ?);';
+        await db.query(query1, [
+            data.update_prosup_id,
+            data.update_product_id,
+            data.update_supplier_id
+
+        ]);
+
+        console.log(`UPDATE Prodcuts. ID: ${data.update_product_id} UPDATE Suppliers. ID: ${data.update_supplier_id}`);
+
+        // Redirect the user to the updated webpage data
+        res.redirect('/productssuppliers');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+// DELETE ROUTES
+app.post('/products/delete', async function (req, res) {
+    try {
+        // Parse frontend form information
+        let data = req.body;
+
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = `CALL sp_DeleteProduct(?);`;
+        await db.query(query1, [data.delete_product_id]);
+
+        console.log(`DELETE product. ID: ${data.delete_product_id} `
+        );
+
+        // Redirect the user to the updated webpage data
+        res.redirect('/products');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+app.post('/productssuppliers/delete', async function (req, res) {
+    try {
+        // Parse frontend form information
+        let data = req.body;
+
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = `CALL sp_DeleteProductsSuppliers(?);`;
+        await db.query(query1, [data.delete_prosup_id]);
+
+        console.log(`DELETE Products_Suppliers. ID: ${data.delete_prosup_id} `);
+
+        // Redirect the user to the updated webpage data
+        res.redirect('/productssuppliers');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+
 app.post('/reset', async function (req, res) {
     try {
         const query1 = `CALL sp_ResetDatabase;`;

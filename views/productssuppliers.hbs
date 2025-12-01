@@ -1,5 +1,30 @@
 <h2>Product Suppliers</h2>
 
+{{! CREATE form }}
+<h2>
+    <button type="button" id="showCreateForm" class="create-btn">Create Product-Supplier Relationship</button>
+    <form id="createForm" style="display:none;" method="POST" action="/productssuppliers/create">
+        <select name='create_product_id' id='create_product_id' required>
+            <option value='' disabled selected>Select a Product</option>
+            {{#each products}}
+            <option value='{{this.productID}}' required>
+                {{this.productID}} - {{this.productName}}
+            </option>
+            {{/each}}
+        </select>
+        <select name='create_supplier_id' id='create_supplier_id' required>
+            <option value='' disabled selected>Select a Supplier</option>
+            {{#each suppliers}}
+            <option value='{{this.supplierID}}' required>
+                {{this.supplierID}} - {{this.supplierName}} 
+            </option>
+            {{/each}}
+        </select>
+
+        <button type="submit">Submit</button>
+    </form>
+</h2>
+
 {{! READ table }}
 <table>
     <thead>
@@ -22,10 +47,10 @@
             <td>{{this.supplierName}}</td>
             
             {{! DELETE form }}
-            <form id='delete_person_form'>
-                <input type='hidden' name='delete_person_id' value='{{this.ID}}' />
+            <form id='delete_person_form' method='POST' action='/productssuppliers/delete'>
+                <input type='hidden' name='delete_prosup_id' value='{{this.proSupID}}' />
                 <td>
-                    <button type="button" class="delete-btn">X</button>
+                    <button type="submit" class="delete-btn">X</button>
                 </td>
             </form>
         </tr>
@@ -35,7 +60,15 @@
 
 <h2>
     <button type="button" id="showUpdateForm" class="update-btn">Update a Product-Supplier Relationship</button>
-    <form id='updateForm' style="display:none;">
+    <form id='updateForm' style="display:none;" method="POST" action='/productssuppliers/update'>
+        <select name='update_prosup_id' id='update_prosup_id' required>
+            <option value='update_prosup_id' disabled selected>Select an ID</option>
+            {{#each productSuppliers}}
+            <option value='{{this.proSupID}}' required>
+                {{this.proSupID}}
+            </option>
+            {{/each}}
+        </select>
         <select name='update_product_id' id='update_product_id' required>
             <option value='' disabled selected>Select a Product</option>
             {{#each products}}
@@ -44,7 +77,7 @@
             </option>
             {{/each}}
         </select>
-        <select name='update_product_id' id='update_product_id' required>
+        <select name='update_supplier_id' id='update_supplier_id' required>
             <option value='' disabled selected>Select a Supplier</option>
             {{#each suppliers}}
             <option value='{{this.supplierID}}' required>
@@ -58,7 +91,22 @@
 </h2>
 
 <script>
+    var isCreateShown = false;
     var isUpdateShown = false;
+    document.getElementById('showCreateForm').onclick = function() {
+        if (!isCreateShown) {
+            document.getElementById('createForm').style.display = 'block';
+            isCreateShown = true;
+        } else {
+            document.getElementById('createForm').style.display = 'none';
+            isCreateShown = false;
+        }
+    };
+    // Hide the form after submission
+    document.getElementById('createForm').onsubmit = function() {
+        this.style.display = 'none';
+    };
+
     document.getElementById('showUpdateForm').onclick = function() {
         if (!isUpdateShown) {
             document.getElementById('updateForm').style.display = 'block';

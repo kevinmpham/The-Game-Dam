@@ -45,10 +45,10 @@
             <td>{{this.Category}}</td>
 
             {{! DELETE form }}
-            <form id='delete_person_form'>
-                <input type='hidden' name='delete_person_id' value='{{this.ID}}' />
+            <form id='delete_person_form' method='POST' action='/products/delete'>
+                <input type='hidden' name='delete_product_id' value='{{this.ID}}' />
                 <td>
-                    <button type="button" class="delete-btn">X</button>
+                    <button type="submit" class="delete-btn">X</button>
                 </td>
             </form>
         </tr>
@@ -59,7 +59,7 @@
 {{! UPDATE form }}
 <h2>
     <button type="button" id="showUpdateForm" class="update-btn">Update a Product</button>
-    <form id='updateForm' style="display:none;">
+    <form id='updateForm' style="display:none;" method="POST" action='/products/update'>
         <select name='update_product_id' id='update_product_id' required>
             <option value='' disabled selected>Select a Product</option>
             {{#each products}}

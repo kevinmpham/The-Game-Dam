@@ -4,9 +4,18 @@
 --Citation for sp_CreateProduct
 -- Date: 11/18/2023
 -- Code based on starter code from CS340 course material and modified for Products table
--- CreateProducts Procedure to insert a new product into the Products table
+-- CreateProduct Procedure to insert a new product into the Products table
+-- UpdateProduct Procedure to update an existing product in the Products table
 DROP PROCEDURE IF EXISTS sp_CreateProduct;
+DROP PROCEDURE IF EXISTS sp_UpdateProduct;
+DROP PROCEDURE IF EXISTS sp_DeleteProduct;
+DROP PROCEDURE IF EXISTS sp_CreateProductsSuppliers;
+DROP PROCEDURE IF EXISTS sp_UpdateProductsSuppliers;
+DROP PROCEDURE IF EXISTS sp_DeleteProductsSuppliers;
 
+-- #############################
+-- CREATE product
+-- #############################
 DELIMITER //
 CREATE PROCEDURE sp_CreateProduct(
     IN p_name VARCHAR(255), 
@@ -21,9 +30,120 @@ BEGIN
     SELECT LAST_INSERT_ID() into p_id;
     SELECT LAST_INSERT_ID() AS 'new_id';
 
-    -- Example of how to get the ID of the newly created person:
+    -- Example of how to get the ID of the newly created Prodcut:
         -- CALL sp_CreateProduct('Xbox', '700.00', 20, 3, @new_id);
-        -- SELECT @new_id AS 'New Person ID';
+        -- SELECT @new_id AS 'New Product ID';
+END //
+DELIMITER ;
+
+-- #############################
+-- UPDATE product
+-- #############################
+DELIMITER //
+CREATE PROCEDURE sp_UpdateProduct(
+    IN p_id INT, 
+    IN p_price DECIMAL(10,2), 
+    IN p_stock INT)
+
+BEGIN
+    UPDATE Products SET productPrice = p_price, productStock = p_stock WHERE productID = p_id; 
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_UpdateProductsSuppliers(
+    IN ps_id INT, 
+    IN p_id INT, 
+    IN s_id INT)
+
+BEGIN
+    UPDATE Products_Suppliers SET productID = p_id, supplierID = s_id WHERE proSupID = ps_id; 
+END //
+DELIMITER ;
+
+-- #############################
+-- DELETE products
+-- ############################
+DELIMITER //
+CREATE PROCEDURE sp_DeleteProduct(IN p_id INT)
+BEGIN
+    DECLARE error_message VARCHAR(255); 
+
+    -- error handling
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Roll back the transaction on any error
+        ROLLBACK;
+        -- Propogate the custom error message to the caller
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+        -- Deleting corresponding rows from both bsg_people table and 
+        --      intersection table to prevent a data anamoly
+        -- This can also be accomplished by using an 'ON DELETE CASCADE' constraint
+        --      inside the bsg_cert_people table.
+        DELETE FROM Products_Suppliers WHERE productID = p_id;
+        DELETE FROM ProductRestockDetails WHERE productID = p_id;
+        DELETE FROM Products WHERE productID = p_id;
+
+        -- ROW_COUNT() returns the number of rows affected by the preceding statement.
+        IF ROW_COUNT() = 0 THEN
+            set error_message = CONCAT('No matching record found in Products for id: ', p_id);
+            -- Trigger custom error, invoke EXIT HANDLER
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = error_message;
+        END IF;
+
+    COMMIT;
+
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_CreateProductsSuppliers(
+    IN p_id INT, 
+    IN s_id INT,
+    OUT ps_id INT)
+BEGIN
+    INSERT INTO Products_Suppliers (productID, supplierID) 
+    VALUES (p_id, s_id);
+
+    SELECT LAST_INSERT_ID() into ps_id;
+    SELECT LAST_INSERT_ID() AS 'new_id';
+
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_DeleteProductsSuppliers(IN ps_id INT)
+BEGIN
+    DECLARE error_message VARCHAR(255); 
+
+    -- error handling
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Roll back the transaction on any error
+        ROLLBACK;
+        -- Propogate the custom error message to the caller
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+        -- Deleting corresponding rows from both bsg_people table and 
+        --      intersection table to prevent a data anamoly
+        -- This can also be accomplished by using an 'ON DELETE CASCADE' constraint
+        --      inside the bsg_cert_people table.
+        DELETE FROM Products_Suppliers WHERE proSupID = ps_id;
+
+        -- ROW_COUNT() returns the number of rows affected by the preceding statement.
+        IF ROW_COUNT() = 0 THEN
+            set error_message = CONCAT('No matching record found in Products_Suppliers for id: ', ps_id);
+            -- Trigger custom error, invoke EXIT HANDLER
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = error_message;
+        END IF;
+
+    COMMIT;
+
 END //
 DELIMITER ;
 
@@ -423,3 +543,5 @@ SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 END //
 DELIMITER ;
+
+
