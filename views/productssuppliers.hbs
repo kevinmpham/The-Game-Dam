@@ -1,3 +1,10 @@
+{{!-- 
+Citations:
+Code based off starter code provided by CS340.
+AI was used to help with adding confirmation dialogs to reset button which was changed to add confirmation dialogs to delete buttons.
+
+--}}
+
 <h2>Product Suppliers</h2>
 
 {{! CREATE form }}
@@ -39,7 +46,7 @@
     </thead>
 
     <tbody>
-        {{! For each row, print the proSupID, productID, supplierID }}
+        {{! For each row, print the proSupID, productName, a  supplierName }}
         {{#each productSuppliers}}
         <tr>
             <td>{{this.proSupID}}</td>
@@ -47,7 +54,7 @@
             <td>{{this.supplierName}}</td>
             
             {{! DELETE form }}
-            <form id='delete_person_form' method='POST' action='/productssuppliers/delete'>
+            <form class='delete-form' method='POST' action='/productssuppliers/delete'>
                 <input type='hidden' name='delete_prosup_id' value='{{this.proSupID}}' />
                 <td>
                     <button type="submit" class="delete-btn">X</button>
@@ -106,7 +113,7 @@
     document.getElementById('createForm').onsubmit = function() {
         this.style.display = 'none';
     };
-
+    // Toggle update form visibility
     document.getElementById('showUpdateForm').onclick = function() {
         if (!isUpdateShown) {
             document.getElementById('updateForm').style.display = 'block';
@@ -120,5 +127,14 @@
     document.getElementById('updateForm').onsubmit = function() {
         this.style.display = 'none';
     };
+    // Attach confirmation to all delete forms
+    document.querySelectorAll('.delete-form').forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+            var confirmed = confirm('Are you sure you want to delete this relationship? This action cannot be undone.');
+            if (!confirmed) {
+                e.preventDefault();
+            }
+        });
+    });
 </script>
 

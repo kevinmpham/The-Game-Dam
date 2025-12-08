@@ -1,11 +1,11 @@
 -- Kevin Pham & Brian Gatch
 
 
---Citation for sp_CreateProduct
+--Citations:
 -- Date: 11/18/2023
--- Code based on starter code from CS340 course material and modified for Products table
--- CreateProduct Procedure to insert a new product into the Products table
--- UpdateProduct Procedure to update an existing product in the Products table
+-- Code based on starter code from CS340 course material and modified for Products and Products_Suppliers tables
+-- No AI was used to generate this code.
+
 DROP PROCEDURE IF EXISTS sp_CreateProduct;
 DROP PROCEDURE IF EXISTS sp_UpdateProduct;
 DROP PROCEDURE IF EXISTS sp_DeleteProduct;
@@ -51,6 +51,8 @@ END //
 DELIMITER ;
 
 DELIMITER //
+
+-- Update Products_Suppliers relationship
 CREATE PROCEDURE sp_UpdateProductsSuppliers(
     IN ps_id INT, 
     IN p_id INT, 
@@ -99,6 +101,7 @@ BEGIN
 END //
 DELIMITER ;
 
+-- Create a product-supplier relationship
 DELIMITER //
 CREATE PROCEDURE sp_CreateProductsSuppliers(
     IN p_id INT, 
@@ -114,6 +117,7 @@ BEGIN
 END //
 DELIMITER ;
 
+-- Delete a product-supplier relationship
 DELIMITER //
 CREATE PROCEDURE sp_DeleteProductsSuppliers(IN ps_id INT)
 BEGIN

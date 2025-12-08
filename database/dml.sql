@@ -18,23 +18,25 @@ LEFT JOIN Categories ON Products.categoryID = Categories.categoryID
 SELECT productID, productName, productPrice, productStock, categoryID FROM Products
 WHERE productID = :productID_selected_from_update_form
 
--- Add new product
-INSERT INTO Products (productName, productPrice, productStock, categoryID)
-VALUES (:product_name_input, :product_price_input, :product_stock_input, :category_id_input)
+-- Create new product
+INSERT INTO Products (productName, productPrice, productStock, categoryID) 
+VALUES (p_name, p_price, p_stock, category);
 
 -- Update existing product
-UPDATE Products SET productName = :product_name_input, 
-    productPrice = :product_price_input, 
-    productStock = :product_stock_input, 
-    categoryID = :category_id_input
-WHERE productID = :product_id_input
+UPDATE Products SET productPrice = p_price, productStock = p_stock WHERE productID = p_id; 
 
 -- Delete a product
 DELETE FROM Products WHERE productID = :product_id_input
 
 -- Associate a product with a supplier
-INSERT INTO Products_Suppliers (productID, supplierID)
-VALUES (:product_id_input, :supplier_id_input)
+INSERT INTO Products_Suppliers (productID, supplierID) 
+VALUES (p_id, s_id);
+
+-- Update a product-supplier relationship
+UPDATE Products_Suppliers SET productID = p_id, supplierID = s_id WHERE proSupID = ps_id; 
+
+-- Delete a product-supplier relationship
+DELETE FROM Products_Suppliers WHERE proSupID = ps_id;
 
 -- Get all Restock Orders with their supplier names and employee names
 SELECT orderID, orderDate, totalCost, isDelivered, 
@@ -46,7 +48,6 @@ LEFT JOIN Employees ON RestockOrders.employeeID = Employees.employeeID
 SELECT detailsID, orderID, Products.productName as "Product", 
     quantityOrdered, singlePrice, totalPrice FROM ProductRestockDetails 
 LEFT JOIN Products ON ProductRestockDetails.productID = Products.productID
-
 
 -- get all employees and their information
 SELECT employeeID AS "ID", fName AS "FirstName", lName AS "LastName", 

@@ -1,3 +1,9 @@
+{{!-- 
+Citations:
+Code based off starter code provided by CS340.
+AI was used to help with adding confirmation dialogs to reset button which was changed to add confirmation dialogs to delete buttons.
+--}}
+
 <h1>Products</h1>
 
 {{! CREATE form }}
@@ -45,7 +51,7 @@
             <td>{{this.Category}}</td>
 
             {{! DELETE form }}
-            <form id='delete_person_form' method='POST' action='/products/delete'>
+            <form class='delete-form' method='POST' action='/products/delete'>
                 <input type='hidden' name='delete_product_id' value='{{this.ID}}' />
                 <td>
                     <button type="submit" class="delete-btn">X</button>
@@ -107,6 +113,15 @@
     document.getElementById('updateForm').onsubmit = function() {
         this.style.display = 'none';
     };
+    // Attach confirmation to all delete forms
+    document.querySelectorAll('.delete-form').forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+            var confirmed = confirm('Are you sure you want to delete this product? This action cannot be undone.');
+            if (!confirmed) {
+                e.preventDefault();
+            }
+        });
+    });
 </script>
 
 </form>

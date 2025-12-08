@@ -1,3 +1,13 @@
+{{!-- 
+Citations:
+Code based off starter code provided by CS340.
+AI used to help with adding confirmation dialogs to reset action.
+Date: 12/6/2025
+Prompts used: 
+Write an event listener which will prompt the user with a confirmation dialog when they click the reset button in the navbar.
+--}}
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +28,7 @@
                     <li><a href="/restockorders">Restock Orders</a></li>
                     <li><a href="/productrestockdetails">Product Restock Details</a></li>
                     <li>
-                        <form method="POST" action="/reset">
+                        <form id="resetForm" method="POST" action="/reset">
                             <button type="submit" class="reset-btn">RESET DATABASE</button>
                         </form>
                     </li>
@@ -26,7 +36,21 @@
             </div>
         </nav>
 
-    {{{body}}}
+</body>
+        {{{body}}}
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var resetForm = document.getElementById('resetForm');
+                if (!resetForm) return;
+                resetForm.addEventListener('submit', function (e) {
+                    var confirmed = confirm('Are you sure you want to reset the database? This action cannot be undone.');
+                    if (!confirmed) {
+                        e.preventDefault();
+                    }
+                });
+            });
+        </script>
 
 </body>
 </html>

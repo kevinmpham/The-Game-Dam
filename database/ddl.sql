@@ -3,7 +3,11 @@
 -- Kevin Pham
 -- Brian Gatch
 -- 10/30/2025
--- 
+
+-- This file is a database definition language (DDL) script that will create
+-- the necessary tables for our partially functional inventory management system,
+-- along with inserting sample data to test the functionality of our system.
+-- This file corresponds to our CS340 Portfolio Project
 
 -- Disable foreign key checks and autocommit for clean import
 SET FOREIGN_KEY_CHECKS = 0;
